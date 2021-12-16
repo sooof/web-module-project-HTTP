@@ -17,8 +17,12 @@ const EditMovieForm = (props) => {
 	});
 
     const { id } = useParams();
+	// const { id } = props.match.params;
+	console.log("EditMovieFrom props = ", props)
+	console.log("EditMovieFrom id = ", id)
 
     useEffect(()=>{
+        // axios.get(`http://localhost:9000/api/movies/${id}`)
         axios.get(`http://localhost:9000/api/movies/${id}`)
             .then(res=>{
                 setMovie(res.data);
