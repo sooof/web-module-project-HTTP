@@ -17,7 +17,7 @@ const EditMovieForm = (props) => {
 	});
 
     const { id } = useParams();
-	// const { id } = props.match.params;
+
 	console.log("EditMovieFrom props = ", props)
 	console.log("EditMovieFrom id = ", id)
 
