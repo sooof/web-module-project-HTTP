@@ -5,56 +5,55 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 const AddMovieForm = (props) => {
-	// const { push } = useHistory();
+	const { push } = useHistory();
 
-	// const { setMovies } = props;
-	// const [movie, setMovie] = useState({
-	// 	title:"",
-	// 	director: "",
-	// 	genre: "",
-	// 	metascore: 0,
-	// 	description: ""
-	// });
+	const { setMovies } = props;
+	const [movie, setMovie] = useState({
+		title:"",
+		director: "",
+		genre: "",
+		metascore: 0,
+		description: ""
+	});
 
-    // const { id } = useParams();
+    const { id } = useParams();
 
-	// console.log("EditMovieFrom props = ", props)
-	// console.log("EditMovieFrom id = ", id)
+	console.log("EditMovieFrom props = ", props)
+	console.log("EditMovieFrom id = ", id)
 
-    // useEffect(()=>{
-    //     // axios.get(`http://localhost:9000/api/movies/${id}`)
-    //     axios.get(`http://localhost:9000/api/movies/${id}`)
-    //         .then(res=>{
-    //             setMovie(res.data);
-    //         })
-	// }, [id]);
+    useEffect(()=>{
+        // axios.get(`http://localhost:9000/api/movies/${id}`)
+        axios.get(`http://localhost:9000/api/movies/${id}`)
+            .then(res=>{
+                setMovie(res.data);
+            })
+	}, [id]);
 	
-	// const handleChange = (e) => {
-    //     setMovie({
-    //         ...movie,
-    //         [e.target.name]: e.target.value
-    //     });
-    // }
+	const handleChange = (e) => {
+        setMovie({
+            ...movie,
+            [e.target.name]: e.target.value
+        });
+    }
 
-    // const handleSubmit = (e) => {
-    //     e.preventDefault();
-    //     axios.put(`http://localhost:9000/api/movies/${id}`, movie)
-    //         .then(res=>{
-    //             setMovies(res.data);
-    //             push(`/movies/${movie.id}`);
-	// 		})
-	// 		.catch(err=>{
-	// 			console.log(err);
-	// 		})
-	// }
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        axios.put(`http://localhost:9000/api/movies/${id}`, movie)
+            .then(res=>{
+                setMovies(res.data);
+                push(`/movies/${movie.id}`);
+			})
+			.catch(err=>{
+				console.log(err);
+			})
+	}
 	
-	// const { title, director, genre, metascore, description } = movie;
+	const { title, director, genre, metascore, description } = movie;
 
     return (
 	<div className="col">
 		<div className="modal-content">
-            <hi>AddMovieForm TEST</hi>
-			{/* <form onSubmit={handleSubmit}>
+			<form onSubmit={handleSubmit}>
 				<div className="modal-header">						
 					<h4 className="modal-title">Editing <strong>{movie.title}</strong></h4>
 				</div>
@@ -85,7 +84,7 @@ const AddMovieForm = (props) => {
 					<input type="submit" className="btn btn-info" value="Save"/>
 					<Link to={`/movies/1`}><input type="button" className="btn btn-default" value="Cancel"/></Link>
 				</div>
-			</form> */}
+			</form>
 		</div>
 	</div>);
 }
