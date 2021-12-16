@@ -3,18 +3,19 @@ import { useParams, useHistory } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
 import axios from 'axios';
+const initialMovie = {
+	title:"",
+	director: "",
+	genre: "",
+	metascore: 0,
+	description: ""
+}
 
 const AddMovieForm = (props) => {
-	const { push } = useHistory();
+	const { push } = useHistory(initialMovie);
 
-	const { setMovies } = props;
-	const [movie, setMovie] = useState({
-		title:"",
-		director: "",
-		genre: "",
-		metascore: 0,
-		description: ""
-	});
+	const { setMovies , movies} = props;
+	const [newMovie, setNewMovie] = useState(initialMovie);
 
     const { id } = useParams();
 
@@ -30,15 +31,15 @@ const AddMovieForm = (props) => {
 	}, [id]);
 	
 	const handleChange = (e) => {
-        setMovie({
-            ...movie,
+        setNewMovie({
+            ...newMovie,
             [e.target.name]: e.target.value
         });
     }
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        axios.put(`http://localhost:9000/api/movies/${id}`, movie)
+        axios.put(`http://localhost:9000/api/movies/${id}`, newMovie)
             .then(res=>{
                 setMovies(res.data);
                 push(`/movies/${movie.id}`);
@@ -48,35 +49,35 @@ const AddMovieForm = (props) => {
 			})
 	}
 	
-	const { title, director, genre, metascore, description } = movie;
+	// const { title, director, genre, metascore, description } = newMovie;
 
     return (
 	<div className="col">
 		<div className="modal-content">
 			<form onSubmit={handleSubmit}>
 				<div className="modal-header">						
-					<h4 className="modal-title">Editing <strong>{movie.title}</strong></h4>
+					<h4 className="modal-title">Editing <strong>{newMovie.title}</strong></h4>
 				</div>
 				<div className="modal-body">					
 					<div className="form-group">
 						<label>Title</label>
-						<input value={title} onChange={handleChange} name="title" type="text" className="form-control"/>
+						<input value={newMovie.title} onChange={handleChange} name="title" type="text" className="form-control"/>
 					</div>
 					<div className="form-group">
 						<label>Director</label>
-						<input value={director} onChange={handleChange} name="director" type="text" className="form-control"/>
+						<input value={newMovie.director} onChange={handleChange} name="director" type="text" className="form-control"/>
 					</div>
 					<div className="form-group">
 						<label>Genre</label>
-						<input value={genre} onChange={handleChange} name="genre" type="text" className="form-control"/>
+						<input value={newMovie.genre} onChange={handleChange} name="genre" type="text" className="form-control"/>
 					</div>
 					<div className="form-group">
 						<label>Metascore</label>
-						<input value={metascore} onChange={handleChange} name="metascore" type="number" className="form-control"/>
+						<input value={newMovie.metascore} onChange={handleChange} name="metascore" type="number" className="form-control"/>
 					</div>		
 					<div className="form-group">
 						<label>Description</label>
-						<textarea value={description} onChange={handleChange} name="description" className="form-control"></textarea>
+						<textarea value={newMovie.description} onChange={handleChange} name="description" className="form-control"></textarea>
 					</div>
 									
 				</div>
