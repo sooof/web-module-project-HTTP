@@ -22,13 +22,6 @@ const AddMovieForm = (props) => {
 	console.log("EditMovieFrom props = ", props)
 	console.log("EditMovieFrom id = ", id)
 
-    useEffect(()=>{
-        // axios.get(`http://localhost:9000/api/movies/${id}`)
-        axios.get(`http://localhost:9000/api/movies/${id}`)
-            .then(res=>{
-                setMovie(res.data);
-            })
-	}, [id]);
 	
 	const handleChange = (e) => {
         setNewMovie({
@@ -39,17 +32,17 @@ const AddMovieForm = (props) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        axios.put(`http://localhost:9000/api/movies/${id}`, newMovie)
+        axios.post(`http://localhost:9000/api/movies`, newMovie)
             .then(res=>{
-                setMovies(res.data);
-                push(`/movies/${movie.id}`);
+                setMovies([
+					...movies, newMovie
+				]);
+                push(`/movies`);
 			})
 			.catch(err=>{
 				console.log(err);
 			})
 	}
-	
-	// const { title, director, genre, metascore, description } = newMovie;
 
     return (
 	<div className="col">
